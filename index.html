@@ -7,7 +7,23 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
-<body>
+<body class="body">
+  <header class="header position_center">
+    <img src="./images/logo_white.svg" alt="логотип" class="header__logo">
+  </header>
+  <main class="main position_center">
+    <section class="profile">
+      <img src="./images/avatar.jpg" alt="аватарка" class="profile__avatar">
+      <div class="profile__info">
+        <div class="profile__container">
+          <h1 class="profile__heading">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button"><img src="./images/edit-button.svg" alt="редактировать" class="profile__edit-button-img"></button>
+        </div>
+        <p class="profile__paragraph">Исследователь океана</p>
+      </div>
+      <button class="profile__add-button"><img src="./images/add-button.svg" alt="добавить" class="profile__add-button-img"></button>
+    </section>
+  </main>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
