@@ -1,0 +1,8 @@
+.gallery__container {
+	max-width: 246px;
+	margin: 25px auto 0;
+	padding: 0 5px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

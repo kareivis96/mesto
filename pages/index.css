@@ -23,8 +23,16 @@
 @import url('../blocks/profile/__paragraph/profile__paragraph.css');
 @import url('../blocks/profile/__add-button/profile__add-button.css');
 
-/* стили блока popup */
-@import url('../blocks/header/header.css');
+/* стили блока gallery */
+@import url('../blocks/gallery/gallery.css');
+@import url('../blocks/gallery/__card/gallery__card.css');
+@import url('../blocks/gallery/__img/gallery__img.css');
+@import url('../blocks/gallery/__container/gallery__container.css');
+@import url('../blocks/gallery/__text/gallery__text.css');
+@import url('../blocks/gallery/__like-button/gallery__like-button.css');
+@import url('../blocks/gallery/__like-button/_active/gallery__like-button_active.css');
+
+/* стили блока gallery */
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/header.css');
