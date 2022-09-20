@@ -1,4 +1,5 @@
 .profile__add-button {
+	cursor: pointer;
 	outline: none;
 	box-sizing: border-box;
 	width: 150px;
