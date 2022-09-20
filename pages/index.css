@@ -32,9 +32,11 @@
 @import url('../blocks/gallery/__like-button/gallery__like-button.css');
 @import url('../blocks/gallery/__like-button/_active/gallery__like-button_active.css');
 
-/* стили блока gallery */
-@import url('../blocks/header/header.css');
-@import url('../blocks/header/header.css');
+/* стили блока footer */
+@import url('../blocks/footer/footer.css');
+@import url('../blocks/footer/__copyright/footer__copyright.css');
+
+/* стили блока popup */
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/header.css');
