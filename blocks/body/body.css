@@ -1,5 +1,6 @@
 .body {
-  background: #000;
+  position: relative;
+  background: black;
   font-family: Inter, Arial, sans-serif;
   font-weight: 400;
   color: white;
