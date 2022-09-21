@@ -4,7 +4,7 @@
 
 /* основные стили */
 @import url('../blocks/body/body.css');
-@import url('../blocks/position/_center/position_center.css');
+@import url('../blocks/position-center/position-center.css');
 
 /* стили блока header */
 @import url('../blocks/header/header.css');
