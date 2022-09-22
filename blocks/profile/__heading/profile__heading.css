@@ -1,15 +1,19 @@
 .profile__heading {
-	margin: 0;
-	padding: 0;
-	font-weight: 500;
-	font-size: 42px;
-	line-height: calc(48/42);
+  margin: 0;
+  padding: 0;
+  max-width: 450px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: calc(48/42);
 }
 
 @media (max-width: 700px) {
-	.profile__heading {
-		text-align: center;
-		font-size: 27px;
-		line-height: calc(33/27);
-	}
+  .profile__heading {
+    text-align: center;
+    font-size: 27px;
+    line-height: calc(33/27);
+  }
 }

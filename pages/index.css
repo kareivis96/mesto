@@ -1,6 +1,6 @@
 /* шрифты и сброс стилей */
-@import url('../vendor/fonts/fonts.css');
 @import url('../vendor/normalize.css');
+@import url('../vendor/fonts/fonts.css');
 
 /* основные стили */
 @import url('../blocks/body/body.css');
@@ -25,12 +25,15 @@
 
 /* стили блока gallery */
 @import url('../blocks/gallery/gallery.css');
-@import url('../blocks/gallery/__card/gallery__card.css');
-@import url('../blocks/gallery/__img/gallery__img.css');
-@import url('../blocks/gallery/__container/gallery__container.css');
-@import url('../blocks/gallery/__text/gallery__text.css');
-@import url('../blocks/gallery/__like-button/gallery__like-button.css');
-@import url('../blocks/gallery/__like-button/_active/gallery__like-button_active.css');
+@import url('../blocks/gallery/__list/gallery__list.css');
+
+/* стили блока card */
+@import url('../blocks/card/card.css');
+@import url('../blocks/card/__img/card__img.css');
+@import url('../blocks/card/__container/card__container.css');
+@import url('../blocks/card/__text/card__text.css');
+@import url('../blocks/card/__like-button/card__like-button.css');
+@import url('../blocks/card/__like-button/_active/card__like-button_active.css');
 
 /* стили блока footer */
 @import url('../blocks/footer/footer.css');
@@ -39,9 +42,16 @@
 /* стили блока popup */
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/__container/popup__container.css');
+@import url('../blocks/popup/__form/popup__form.css');
 @import url('../blocks/popup/__heading/popup__heading.css');
+
 @import url('../blocks/popup/__name/popup__name.css');
 @import url('../blocks/popup/__job/popup__job.css');
+
+@import url('../blocks/popup/__input/popup__input.css');
+@import url('../blocks/popup/__input/_name/popup__input_name.css');
+@import url('../blocks/popup/__input/_job/popup__input_job.css');
+
 @import url('../blocks/popup/__save-button/popup__save-button.css');
 @import url('../blocks/popup/__close-button/popup__close-button.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
