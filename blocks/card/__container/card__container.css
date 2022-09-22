@@ -1,6 +1,5 @@
-.gallery__container {
-	max-width: 246px;
-	margin: 25px auto 0;
+.card__container {
+	margin: 25px 15px 0 21px;
 	padding: 0 5px 0 0;
 	display: flex;
 	justify-content: space-between;
