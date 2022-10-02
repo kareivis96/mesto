@@ -27,77 +27,54 @@
     </section>
     <section class="gallery">
       <ul class="gallery__list position-center">
-        <li>
-          <article class="card">
-            <img src="./images/karachaevsk.jpg" alt="карачаевск" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Карачаевск</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
-        <li>
-          <article class="card">
-            <img src="./images/dombai.jpg" alt="домбай" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Домбай</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
-        <li>
-          <article class="card">
-            <img src="./images/elbrus.jpg" alt="эльбрус" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Гора Эльбрус</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
-        <li>
-          <article class="card">
-            <img src="./images/dombai.jpg" alt="домбай" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Домбай</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
-        <li>
-          <article class="card">
-            <img src="./images/karachaevsk.jpg" alt="карачаевск" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Карачаево-Черкессия</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
-        <li>
-          <article class="card">
-            <img src="./images/elbrus.jpg" alt="эльбрус" class="card__img">
-            <div class="card__container">
-              <h2 class="card__text">Гора Эльбрус</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </article>
-        </li>
       </ul>
     </section>
   </main>
   <footer class="footer position-center">
     <p lang="en" class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div id="edit-profile-popup" class="popup">
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form name="editForm" class="popup__form">
-        <input name="formName" type="text" class="popup__input popup__input_type_name" placeholder="Имя">
-        <input name="formJob" type="text" class="popup__input popup__input_type_job" placeholder="Род занятий">
+      <form id="edit-profile-form" name="editForm" class="popup__form">
+        <input id="edit-profile-input-name" name="formName" type="text" class="popup__input" placeholder="Имя">
+        <input id="edit-profile-input-job" name="formJob" type="text" class="popup__input" placeholder="Род занятий">
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
-      <button type="button" class="popup__close-button"></button>
+      <button id="edit-profile-close-button" type="button" class="close-button"></button>
     </div>
   </div>
+  <div id="add-card-popup" class="popup">
+    <div class="popup__container">
+      <h2 class="popup__heading">Новое место</h2>
+      <form id="add-card-form" name="addForm" class="popup__form">
+        <input id="add-card-input-name" name="addFormName" type="text" class="popup__input" placeholder="Название">
+        <input id="add-card-input-url" name="addFormUrl" type="text" class="popup__input"
+          placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save-button">Создать</button>
+      </form>
+      <button id="add-card-close-button" type="button" class="close-button"></button>
+    </div>
+  </div>
+  <div id="image-popup" class="popup popup_type_image-popup">
+    <div class="image-block">
+      <img class="image-block__img">
+      <h2 class="image-block__heading"></h2>
+      <button id="image-block-close-button" type="button" class="close-button"></button>
+    </div>
+  </div>
+  <template id="card-template">
+    <li id="card-list-element">
+      <article class="card">
+        <img class="card__img">
+        <div class="card__container">
+          <h2 class="card__text"></h2>
+          <button type="button" class="card__like-button"></button>
+        </div>
+        <button type="button" class="card__delete-button"></button>
+      </article>
+    </li>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 
