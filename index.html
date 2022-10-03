@@ -19,7 +19,7 @@
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__heading">Жак-Ив Кусто</h1>
-          <button type="button" class="profile__edit-button"></button>
+          <button type="button" class="profile__edit-button" aria-label="edit-profile"></button>
         </div>
         <p class="profile__paragraph">Исследователь океана</p>
       </div>
@@ -37,8 +37,9 @@
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form id="edit-profile-form" name="editForm" class="popup__form">
-        <input id="edit-profile-input-name" name="formName" type="text" class="popup__input" placeholder="Имя">
-        <input id="edit-profile-input-job" name="formJob" type="text" class="popup__input" placeholder="Род занятий">
+        <input id="edit-profile-input-name" name="formName" type="text" class="popup__input" placeholder="Имя" required>
+        <input id="edit-profile-input-job" name="formJob" type="text" class="popup__input" placeholder="Род занятий"
+          required>
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
       <button id="edit-profile-close-button" type="button" class="close-button"></button>
@@ -48,9 +49,10 @@
     <div class="popup__container">
       <h2 class="popup__heading">Новое место</h2>
       <form id="add-card-form" name="addForm" class="popup__form">
-        <input id="add-card-input-name" name="addFormName" type="text" class="popup__input" placeholder="Название">
-        <input id="add-card-input-url" name="addFormUrl" type="text" class="popup__input"
-          placeholder="Ссылка на картинку">
+        <input id="add-card-input-name" name="addFormName" type="text" class="popup__input" placeholder="Название"
+          required>
+        <input id="add-card-input-url" name="addFormUrl" type="url" class="popup__input"
+          placeholder="Ссылка на картинку" required>
         <button type="submit" class="popup__save-button">Создать</button>
       </form>
       <button id="add-card-close-button" type="button" class="close-button"></button>
@@ -75,7 +77,8 @@
       </article>
     </li>
   </template>
-  <script src="./scripts/index.js"></script>
+  <script defer src="./scripts/data.js"></script>
+  <script defer src="./scripts/index.js"></script>
 </body>
 
 </html>
