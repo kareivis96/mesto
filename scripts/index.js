@@ -7,15 +7,15 @@ const editProfileInputJob = document.querySelector('#edit-profile-input-job');
 const profileName = document.querySelector('.profile__heading');
 const profileJob = document.querySelector('.profile__paragraph');
 
-const galleryList = document.querySelector('.gallery__list');
-const cardTemplate = document.querySelector('#card-template').content;
-
 const addButton = document.querySelector('.profile__add-button');
 const addCardPopup = document.querySelector('#add-card-popup');
 const addCardCloseButton = document.querySelector('#add-card-close-button');
 const addCardForm = document.querySelector('#add-card-form');
 const addCardInputName = document.querySelector('#add-card-input-name');
 const addCardInputUrl = document.querySelector('#add-card-input-url');
+
+const galleryList = document.querySelector('.gallery__list');
+const cardTemplate = document.querySelector('#card-template').content;
 
 const imagePopup = document.querySelector('#image-popup');
 const imagePopupImg = document.querySelector('.image-block__img');
@@ -24,20 +24,24 @@ const imagePopupCloseButton = document.querySelector('#image-block-close-button'
 
 
 // функция создает карточку на основе template
-function createCard(cardSample, cardUrl, cardName) {
-  const cardListElement = cardSample.querySelector('#card-list-element').cloneNode(true);
-  const cardListElementImage = cardListElement.querySelector('.card__img');
-  const cardListElementText = cardListElement.querySelector('.card__text');
+const createCard = createAnyCardTemplate(cardTemplate);
 
-  cardListElementImage.src = cardUrl;
-  cardListElementImage.alt = cardUrl;
-  cardListElementText.textContent = cardName;
+function createAnyCardTemplate(cardSample) {
+  return function createAnyCard(cardUrl, cardName) {
+    const cardListElement = cardSample.querySelector('#card-list-element').cloneNode(true);
+    const cardListElementImage = cardListElement.querySelector('.card__img');
+    const cardListElementText = cardListElement.querySelector('.card__text');
 
-  bindCardLikeEvent(cardListElement);
-  bindCardDeleteEvent(cardListElement);
-  bindCardOpenImagePopupEvent(cardListElement);
-  
-  return cardListElement;
+    cardListElementImage.src = cardUrl;
+    cardListElementImage.alt = cardName;
+    cardListElementText.textContent = cardName;
+
+    bindCardLikeEvent(cardListElement);
+    bindCardDeleteEvent(cardListElement);
+    bindCardOpenImagePopupEvent(cardListElement);
+
+    return cardListElement;
+  }
 }
 
 // функции вешают слушатели событий на созданные карточки
@@ -65,10 +69,10 @@ function bindCardOpenImagePopupEvent(listElement) {
 }
 
 // функции закрытия попапа
-let closePopup = (popupForClose) => popupForClose.classList.remove('popup_opened');
+const closePopup = (popupForClose) => popupForClose.classList.remove('popup_opened');
 
 // функция открыти попапа
-let openPopup = (popupForOpen) => popupForOpen.classList.add('popup_opened');
+const openPopup = (popupForOpen) => popupForOpen.classList.add('popup_opened');
 
 // функция чтоб сохранить изменения и закрыть попап профиля
 function saveProfileChanges() {
@@ -106,14 +110,14 @@ addCardCloseButton.addEventListener('click', () => closePopup(addCardPopup));
 addCardForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  galleryList.prepend(createCard(cardTemplate, addCardInputUrl.value, addCardInputName.value));
+  galleryList.prepend(createCard(addCardInputUrl.value, addCardInputName.value));
   addCardForm.reset();
   closePopup(addCardPopup);
 });
 
 // добавление 6-ти базовых карточек
 initialCards.forEach((el) => {
-  galleryList.append(createCard(cardTemplate, el.link, el.name));
+  galleryList.append(createCard(el.link, el.name));
 });
 
 // закрытие попапа с картинкой
