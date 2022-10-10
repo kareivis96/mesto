@@ -104,7 +104,10 @@ editProfileCloseButton.addEventListener('click', () => closePopup(editProfilePop
 addButton.addEventListener('click', () => openPopup(addCardPopup));
 
 // закрытие попапа для добавления карточек
-addCardCloseButton.addEventListener('click', () => closePopup(addCardPopup));
+addCardCloseButton.addEventListener('click', () => {
+  addCardForm.reset();
+  closePopup(addCardPopup);
+});
 
 // добавление карточки в галерею с последующим закрытием попапа
 addCardForm.addEventListener('submit', (evt) => {
