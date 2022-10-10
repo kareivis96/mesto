@@ -22,6 +22,9 @@ const imagePopupImg = document.querySelector('.image-block__img');
 const imagePopupHeading = document.querySelector('.image-block__heading');
 const imagePopupCloseButton = document.querySelector('#image-block-close-button');
 
+const popupList = Array.from(document.querySelectorAll('.popup'));
+
+
 
 // функция создает карточку на основе template
 const createCard = createAnyCardTemplate(cardTemplate);
@@ -68,13 +71,17 @@ function bindCardOpenImagePopupEvent(listElement) {
   });
 }
 
-// функции закрытия попапа
-const closePopup = (popupForClose) => popupForClose.classList.remove('popup_opened');
+// функция закрытия попапа
+function closePopup(popupForClose) {
+  popupForClose.classList.remove('popup_opened');
+};
 
 // функция открыти попапа
-const openPopup = (popupForOpen) => popupForOpen.classList.add('popup_opened');
+function openPopup(popupForOpen) {
+  popupForOpen.classList.add('popup_opened');
+};
 
-// функция чтоб сохранить изменения и закрыть попап профиля
+// функция чтоб сохранить изменения в попап профиля
 function saveProfileChanges() {
   profileName.textContent = editProfileInputName.value;
   profileJob.textContent = editProfileInputJob.value;
@@ -86,6 +93,7 @@ editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
   editProfileInputName.value = profileName.textContent;
   editProfileInputJob.value = profileJob.textContent;
+  enableValidation();
 });
 
 // сохранить изменения и закрыть попап профиля
@@ -107,6 +115,7 @@ addButton.addEventListener('click', () => openPopup(addCardPopup));
 addCardCloseButton.addEventListener('click', () => {
   addCardForm.reset();
   closePopup(addCardPopup);
+  enableValidation();
 });
 
 // добавление карточки в галерею с последующим закрытием попапа
@@ -116,6 +125,7 @@ addCardForm.addEventListener('submit', (evt) => {
   galleryList.prepend(createCard(addCardInputUrl.value, addCardInputName.value));
   addCardForm.reset();
   closePopup(addCardPopup);
+  enableValidation();
 });
 
 // добавление 6-ти базовых карточек
@@ -125,3 +135,22 @@ initialCards.forEach((el) => {
 
 // закрытие попапа с картинкой
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
+// ФУНКЦИОНАЛЬНОСТЬ ЗАКРЫТИЯ ПОПАПОВ ПО НАЖАТИЮ НА ОВЕРЛЕЙ И 'ESC'
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener('click', (evt) => {
+    if (evt.target === popupElement) {
+      closePopup(popupElement);
+    }
+  });
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popupElement);
+    }
+  });
+});
+
+
+
+enableValidation();
