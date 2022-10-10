@@ -61,5 +61,3 @@ function toggleButtonState(inputList, submitButton) {
     submitButton.classList.remove('popup__save-button_disabled');
   }
 };
-
-enableValidation();
