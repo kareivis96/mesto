@@ -23,6 +23,7 @@ const imagePopupHeading = document.querySelector('.image-block__heading');
 const imagePopupCloseButton = document.querySelector('#image-block-close-button');
 
 
+
 // функция создает карточку на основе template
 const createCard = createAnyCardTemplate(cardTemplate);
 
@@ -68,13 +69,17 @@ function bindCardOpenImagePopupEvent(listElement) {
   });
 }
 
-// функции закрытия попапа
-const closePopup = (popupForClose) => popupForClose.classList.remove('popup_opened');
+// функция закрытия попапа
+function closePopup(popupForClose) {
+  popupForClose.classList.remove('popup_opened');
+};
 
 // функция открыти попапа
-const openPopup = (popupForOpen) => popupForOpen.classList.add('popup_opened');
+function openPopup(popupForOpen) {
+  popupForOpen.classList.add('popup_opened');
+};
 
-// функция чтоб сохранить изменения и закрыть попап профиля
+// функция чтоб сохранить изменения в попап профиля
 function saveProfileChanges() {
   profileName.textContent = editProfileInputName.value;
   profileJob.textContent = editProfileInputJob.value;
@@ -86,6 +91,7 @@ editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
   editProfileInputName.value = profileName.textContent;
   editProfileInputJob.value = profileJob.textContent;
+  enableValidation();
 });
 
 // сохранить изменения и закрыть попап профиля
