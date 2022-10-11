@@ -1,5 +1,5 @@
 const validationConfig = {
-  errorElementSelector: '#error-text',
+  errorElementSelector: '.popup__error-text',
   errorElementVisibleClass: 'popup__error-text_type_visible',
   inputElementTypeInvalid: 'popup__input_type_invalid',
   inputSelector: '.popup__input',
