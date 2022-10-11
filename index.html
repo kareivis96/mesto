@@ -40,12 +40,12 @@
         <div class="popup__input-wrapper">
           <input id="edit-profile-input-name" name="formName" type="text" class="popup__input" placeholder="Имя"
             required minlength="2" maxlength="40">
-          <p id="edit-profile-input-name-error-text" class="popup__error-text"></p>
+          <p id="error-text" class="popup__error-text"></p>
         </div>
         <div class="popup__input-wrapper">
           <input id="edit-profile-input-job" name="formJob" type="text" class="popup__input" placeholder="Род занятий"
             required minlength="2" maxlength="200">
-          <p id="edit-profile-input-job-error-text" class="popup__error-text"></p>
+          <p id="error-text" class="popup__error-text"></p>
         </div>
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
@@ -59,12 +59,12 @@
         <div class="popup__input-wrapper">
           <input id="add-card-input-name" name="addFormName" type="text" class="popup__input" placeholder="Название"
             required minlength="2" maxlength="30">
-          <p id="add-card-input-name-error-text" class="popup__error-text"></p>
+          <p id="error-text" class="popup__error-text"></p>
         </div>
         <div class="popup__input-wrapper">
           <input id="add-card-input-url" name="addFormUrl" type="url" class="popup__input"
             placeholder="Ссылка на картинку" required>
-          <p id="add-card-input-url-error-text" class="popup__error-text"></p>
+          <p id="error-text" class="popup__error-text"></p>
         </div>
         <button type="submit" class="popup__save-button">Создать</button>
       </form>
@@ -90,9 +90,9 @@
       </article>
     </li>
   </template>
-  <script defer src="./scripts/validate.js"></script>
   <script defer src="./scripts/data.js"></script>
   <script defer src="./scripts/index.js"></script>
+  <script defer src="./scripts/validate.js"></script>
 </body>
 
 </html>
