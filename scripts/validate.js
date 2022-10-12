@@ -12,27 +12,27 @@ const validationConfig = {
 
 
 // функция показывает ошибку в валидации
-function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = inputElement.parentNode.querySelector(validationConfig.errorElementSelector);
+function showInputError(configObject, formElement, inputElement, errorMessage) {
+  const errorElement = inputElement.parentNode.querySelector(configObject.errorElementSelector);
 
-  errorElement.classList.add(validationConfig.errorElementVisibleClass);
+  errorElement.classList.add(configObject.errorElementVisibleClass);
   errorElement.textContent = errorMessage;
-  inputElement.classList.add(validationConfig.inputElementTypeInvalid);
+  inputElement.classList.add(configObject.inputElementTypeInvalid);
 };
 // функция скрывает ошибку в валидации
-function hideInputError(formElement, inputElement) {
-  const errorElement = inputElement.parentNode.querySelector(validationConfig.errorElementSelector);
+function hideInputError(configObject, formElement, inputElement) {
+  const errorElement = inputElement.parentNode.querySelector(configObject.errorElementSelector);
 
-  errorElement.classList.remove(validationConfig.errorElementVisibleClass);
+  errorElement.classList.remove(configObject.errorElementVisibleClass);
   errorElement.textContent = '';
-  inputElement.classList.remove(validationConfig.inputElementTypeInvalid);
+  inputElement.classList.remove(configObject.inputElementTypeInvalid);
 };
 // функция проверяет инпут на валидность
-function isInputElementValid(formElement, inputElement) {
+function isInputElementValid(configObject, formElement, inputElement) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(configObject, formElement, inputElement, inputElement.validationMessage);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(configObject, formElement, inputElement);
   }
 };
 
@@ -44,29 +44,29 @@ function hasInvalidInput(inputList) {
   });
 };
 // функция изменяет состояние кнопки, в зависимости от наличия невалидных инпутов
-function toggleButtonState(inputList, submitButton) {
+function toggleButtonState(configObject, inputList, submitButton) {
   if (hasInvalidInput(inputList)) {
-    submitButton.classList.add(validationConfig.popupSaveButtonDisabledSelector);
+    submitButton.classList.add(configObject.popupSaveButtonDisabledSelector);
     submitButton.setAttribute('disabled', true);
   } else {
-    submitButton.classList.remove(validationConfig.popupSaveButtonDisabledSelector);
+    submitButton.classList.remove(configObject.popupSaveButtonDisabledSelector);
     submitButton.removeAttribute('disabled');
   }
 };
 
 
 // функция перебирает инпуты из массива и вешает на них слушатели событий
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
-  const submitButton = formElement.querySelector(validationConfig.popupSaveButtonSelector);
+function setEventListeners(configObject, formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(configObject.inputSelector));
+  const submitButton = formElement.querySelector(configObject.popupSaveButtonSelector);
 
-  toggleButtonState(inputList, submitButton);
+  toggleButtonState(configObject, inputList, submitButton);
 
   inputList.forEach((inputElement) => {
     // функция применяет функции проверки инпутов на валидность и состояние кнопки
     function ApplyCheckFunctions() {
-      toggleButtonState(inputList, submitButton);
-      isInputElementValid(formElement, inputElement);
+      toggleButtonState(configObject, inputList, submitButton);
+      isInputElementValid(configObject, formElement, inputElement);
     }
     inputElement.addEventListener('input', ApplyCheckFunctions);
     document.addEventListener('click', ApplyCheckFunctions);
@@ -75,15 +75,15 @@ function setEventListeners(formElement) {
 
 
 // функция перебирает массив из форм на странице и включает валидацию для каждой из них
-function enableValidation(validationConfig) {
-  const formList = Array.from(document.querySelectorAll(validationConfig.popupFormSelector));
+function enableValidation(configObject) {
+  const formList = Array.from(document.querySelectorAll(configObject.popupFormSelector));
 
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
 
-    setEventListeners(formElement);
+    setEventListeners(configObject, formElement);
   });
 };
 

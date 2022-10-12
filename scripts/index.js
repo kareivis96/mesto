@@ -82,11 +82,11 @@ function hendlerToClosePopupOnClickOverlay(evt) {
 };
 // функция закрытия попапа по нажатию на Esc
 function hendlerToClosePopupOnClickEsc(evt) {
-  popupList.forEach((popupElement) => {
-    if (evt.key === 'Escape') {
-      popupElement.classList.remove('popup_opened');
-    }
-  });
+  const popupToClose = document.querySelector('.popup_opened');
+
+  if (evt.key === 'Escape') {
+    popupToClose.classList.remove('popup_opened');
+  }
 };
 // функция закрытия попапа
 function closePopup(popupToClose) {
