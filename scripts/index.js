@@ -82,9 +82,8 @@ function hendlerToClosePopupOnClickOverlay(evt) {
 };
 // функция закрытия попапа по нажатию на Esc
 function hendlerToClosePopupOnClickEsc(evt) {
-  const popupToClose = document.querySelector('.popup_opened');
-
   if (evt.key === 'Escape') {
+    const popupToClose = document.querySelector('.popup_opened');
     popupToClose.classList.remove('popup_opened');
   }
 };
