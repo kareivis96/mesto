@@ -1,6 +1,6 @@
-import { Card } from "./card.js?1";
-import { initialCards } from "./data.js?1";
-import { FormValidator } from "./validate.js?1";
+import { Card } from "../scripts/card.js";
+import { initialCards } from "../scripts/data.js";
+import { FormValidator } from "../scripts/validate.js";
 
 const buttonToOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonToCloseEditProfile = document.querySelector('#edit-profile-close-button');
