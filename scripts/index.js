@@ -1,5 +1,6 @@
 import { Card } from "./card.js";
 import { initialCards } from "./data.js";
+import { FormValidator } from "./validate.js";
 
 const buttonToOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonToCloseEditProfile = document.querySelector('#edit-profile-close-button');
@@ -19,14 +20,8 @@ const inputUrlCreateCard = document.querySelector('#add-card-input-url');
 
 const galleryList = document.querySelector('.gallery__list');
 
-// const cardTemplate = document.querySelector('#card-template').content;
-
 const imagePopup = document.querySelector('#image-popup');
-const imagePopupImg = document.querySelector('.image-block__img');
-const imagePopupHeading = document.querySelector('.image-block__heading');
 const imagePopupCloseButton = document.querySelector('#image-block-close-button');
-
-const popupList = Array.from(document.querySelectorAll('.popup'));
 
 // функция закрытия попапа по нажатию на оверлей
 function hendlerToClosePopupOnClickOverlay(evt) {
@@ -90,6 +85,9 @@ buttonToCloseCardPopup.addEventListener('click', () => {
   closePopup(popupToCreateCard);
 });
 
+// закрытие попапа с картинкой
+imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
 // добавление карточки в галерею с последующим закрытием попапа
 formCreateCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -99,26 +97,35 @@ formCreateCard.addEventListener('submit', (evt) => {
     cardUrl: inputUrlCreateCard.value,
     cardName: inputNameCreateCard.value,
     imagePopupElement: imagePopup,
-  }).createCard());
+  }).createCard(openPopup));
 
   formCreateCard.reset();
   closePopup(popupToCreateCard);
 });
 
-// добавление 6-ти базовых карточек { cardUrl: el.link, cardName: el.name }
+// добавление 6-ти базовых карточек
 initialCards.forEach((el) => {
   galleryList.append(new Card({
     cardTemplateSelector: '#card-template',
     cardUrl: el.link,
     cardName: el.name,
     imagePopupElement: imagePopup,
-  }).createCard());
+  }).createCard(openPopup));
 });
 
-// закрытие попапа с картинкой
-imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+const popupList = Array.from(document.querySelectorAll('.popup'));
+const validationConfig = {
+  errorElementSelector: '.popup__error-text',
+  errorElementVisibleClass: 'popup__error-text_type_visible',
+  inputElementTypeInvalid: 'popup__input_type_invalid',
+  inputSelector: '.popup__input',
+  popupSaveButtonSelector: '.popup__save-button',
+  popupFormSelector: '.popup__form',
+  popupSaveButtonDisabledSelector: 'popup__save-button_disabled',
+  popupSelector: '.popup',
+  popupOpenedSelector: '.popup_opened',
+}
 
-
-function handlerOpenImagePopup(evt) {
-  openPopup(imagePopup);
-};
+for (let popup of popupList) {
+  new FormValidator(validationConfig, popup).enableValidation();
+}
