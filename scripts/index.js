@@ -60,9 +60,9 @@ function saveProfileChanges() {
 
 // открыть попап редактирования профиля
 buttonToOpenEditProfile.addEventListener('click', () => {
-  openPopup(popupEditProfile);
   inputNameEditProfile.value = profileName.textContent;
   inputJobEditProfile.value = profileJob.textContent;
+  openPopup(popupEditProfile);
 });
 
 // сохранить изменения и закрыть попап профиля
