@@ -1,6 +1,6 @@
 import { Card } from "../scripts/card.js";
 import { initialCards } from "../scripts/data.js";
-import { FormValidator } from "../scripts/validate.js";
+import { FormValidator } from "../scripts/FormValidator.js";
 
 const buttonToOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonToCloseEditProfile = document.querySelector('#edit-profile-close-button');
@@ -26,7 +26,7 @@ const imagePopupCloseButton = document.querySelector('#image-block-close-button'
 // функция закрытия попапа по нажатию на оверлей
 function hendlerToClosePopupOnClickOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    evt.currentTarget.classList.remove('popup_opened');
+    closePopup(evt.currentTarget);
   }
 };
 
@@ -34,14 +34,14 @@ function hendlerToClosePopupOnClickOverlay(evt) {
 function hendlerToClosePopupOnClickEsc(evt) {
   if (evt.key === 'Escape') {
     const popupToClose = document.querySelector('.popup_opened');
-    popupToClose.classList.remove('popup_opened');
+    closePopup(popupToClose);
   }
 };
 
 // функция закрытия попапа
 function closePopup(popupToClose) {
   popupToClose.classList.remove('popup_opened');
-  popupToClose.removeEventListener('click', hendlerToClosePopupOnClickOverlay);
+  popupToClose.removeEventListener('mousedown', hendlerToClosePopupOnClickOverlay);
   document.removeEventListener('keydown', hendlerToClosePopupOnClickEsc);
 };
 
@@ -90,6 +90,7 @@ imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
 // добавление карточки в галерею с последующим закрытием попапа
 formCreateCard.addEventListener('submit', (evt) => {
+  const cardSubmitButton = formCreateCard.querySelector('.popup__save-button');
   evt.preventDefault();
 
   galleryList.prepend(new Card({
@@ -100,6 +101,8 @@ formCreateCard.addEventListener('submit', (evt) => {
   }).createCard(openPopup));
 
   formCreateCard.reset();
+  cardSubmitButton.classList.add('popup__save-button_disabled');
+  cardSubmitButton.setAttribute('disabled', 'true');
   closePopup(popupToCreateCard);
 });
 
@@ -126,6 +129,5 @@ const validationConfig = {
   popupOpenedSelector: '.popup_opened',
 }
 
-for (let popup of popupList) {
-  new FormValidator(validationConfig, popup).enableValidation();
-}
+new FormValidator(validationConfig, popupToCreateCard).enableValidation();
+new FormValidator(validationConfig, popupEditProfile).enableValidation();

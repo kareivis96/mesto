@@ -11,6 +11,8 @@ export class FormValidator {
     this._popupSelector = data.popupSelector;
     this._popupOpenedSelector = data.popupOpenedSelector;
     this._errorElement = this._formElement.querySelector(this._errorElementSelector);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._submitButton = this._formElement.querySelector(this._popupSaveButtonSelector);
   }
 
 
@@ -52,9 +54,6 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._submitButton = this._formElement.querySelector(this._popupSaveButtonSelector);
-
     this._toggleButtonState();
 
     this._inputList.forEach((_inputElement) => {

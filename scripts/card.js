@@ -6,8 +6,9 @@ export class Card {
     this._imagePopup = data.imagePopupElement;
   }
 
-  _handlerCardDeleteEvent(evt) {
-    evt.target.closest('#card-list-element').remove();
+  _handlerCardDeleteEvent() {
+    this._cardListElement.remove();
+    this._cardListElement = null;
   }
 
   _handlerLikeEvent(evt) {
@@ -29,11 +30,9 @@ export class Card {
     this._buttonDelete = this._cardListElement.querySelector('.card__delete-button');
     this._cardImage = this._cardListElement.querySelector('.card__img');
 
-    this._buttonLike.addEventListener('click', this._handlerLikeEvent);
-    this._buttonDelete.addEventListener('click', this._handlerCardDeleteEvent);
-    this._cardImage.addEventListener('click', () => {
-      this._handlerCardImgClick(openImagePopupfunction);
-    });
+    this._buttonLike.addEventListener('click', (evt) => this._handlerLikeEvent(evt));
+    this._buttonDelete.addEventListener('click', (evt) => this._handlerCardDeleteEvent());
+    this._cardImage.addEventListener('click', (evt) => this._handlerCardImgClick(openImagePopupfunction));
   }
 
   createCard(openImagePopupfunction) {
