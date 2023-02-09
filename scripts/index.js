@@ -48,7 +48,7 @@ function closePopup(popupToClose) {
 // функция открыти попапа
 function openPopup(popupToOpen) {
   popupToOpen.classList.add('popup_opened');
-  popupToOpen.addEventListener('click', hendlerToClosePopupOnClickOverlay);
+  popupToOpen.addEventListener('mousedown', hendlerToClosePopupOnClickOverlay);
   document.addEventListener('keydown', hendlerToClosePopupOnClickEsc);
 };
 
@@ -129,5 +129,5 @@ const validationConfig = {
   popupOpenedSelector: '.popup_opened',
 }
 
-new FormValidator(validationConfig, popupToCreateCard).enableValidation();
-new FormValidator(validationConfig, popupEditProfile).enableValidation();
+const cardPopupValidation = new FormValidator(validationConfig, popupToCreateCard).enableValidation();
+const profilePopupValidation = new FormValidator(validationConfig, popupEditProfile).enableValidation();
