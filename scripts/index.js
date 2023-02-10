@@ -129,5 +129,7 @@ const validationConfig = {
   popupOpenedSelector: '.popup_opened',
 }
 
-const cardPopupValidation = new FormValidator(validationConfig, popupToCreateCard).enableValidation();
-const profilePopupValidation = new FormValidator(validationConfig, popupEditProfile).enableValidation();
+const cardPopupValidation = new FormValidator(validationConfig, popupToCreateCard);
+const profilePopupValidation = new FormValidator(validationConfig, popupEditProfile);
+cardPopupValidation.enableValidation();
+profilePopupValidation.enableValidation();
