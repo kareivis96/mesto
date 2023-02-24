@@ -1,6 +1,6 @@
 export class FormValidator {
-  constructor(data, formElement) {
-    this._formElement = formElement;
+  constructor(data, formSelector) {
+    this._formElement = document.querySelector(formSelector);
     this._errorElementSelector = data.errorElementSelector;
     this._errorElementVisibleClass = data.errorElementVisibleClass;
     this._inputElementTypeInvalid = data.inputElementTypeInvalid;

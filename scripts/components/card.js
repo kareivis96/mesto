@@ -1,11 +1,11 @@
 import { PopupWithImage } from "./PopupWithImage.js";
 
 export class Card {
-  constructor(data) {
+  constructor(data, handleCardClick) {
     this._cardTemplate = document.querySelector(`${data.cardTemplateSelector}`).content;
     this._cardUrl = data.cardUrl;
     this._cardName = data.cardName;
-    this._imagePopup = data.imagePopupElement;
+    this._handleCardClick = handleCardClick;
   }
 
   _handlerCardDeleteEvent() {
@@ -17,27 +17,17 @@ export class Card {
     evt.target.classList.toggle('card__like-button_active');
   }
 
-  _handlerCardImgClick(openImagePopupfunction) {
-    this._imagePopupImg = this._imagePopup.querySelector('.image-block__img');
-    this._imagePopupHeading = this._imagePopup.querySelector('.image-block__heading');
-
-    this._imagePopupImg.src = this._cardUrl;
-    this._imagePopupImg.alt = this._cardName;
-    this._imagePopupHeading.textContent = this._cardName;
-    openImagePopupfunction(this._imagePopup);
-  }
-
-  _setCardEventListener(openImagePopupfunction) {
+  _setCardEventListener() {
     this._buttonLike = this._cardListElement.querySelector('.card__like-button');
     this._buttonDelete = this._cardListElement.querySelector('.card__delete-button');
     this._cardImage = this._cardListElement.querySelector('.card__img');
 
     this._buttonLike.addEventListener('click', (evt) => this._handlerLikeEvent(evt));
     this._buttonDelete.addEventListener('click', (evt) => this._handlerCardDeleteEvent());
-    this._cardImage.addEventListener('click', (evt) => this._handlerCardImgClick(openImagePopupfunction));
+    this._cardImage.addEventListener('click', this._handleCardClick);
   }
 
-  createCard(openImagePopupfunction) {
+  createCard() {
     this._cardListElement = this._cardTemplate.querySelector('#card-list-element').cloneNode(true);
     this._cardListElementImage = this._cardListElement.querySelector('.card__img');
     this._cardListElementText = this._cardListElement.querySelector('.card__text');
@@ -46,7 +36,7 @@ export class Card {
     this._cardListElementImage.alt = this._cardName;
     this._cardListElementText.textContent = this._cardName;
 
-    this._setCardEventListener(openImagePopupfunction);
+    this._setCardEventListener();
 
     return this._cardListElement;
   }
