@@ -1,6 +1,10 @@
-import { Card } from "../scripts/card.js";
-import { initialCards } from "../scripts/data.js";
-import { FormValidator } from "../scripts/FormValidator.js";
+import { Card } from "../components/card.js";
+import { initialCards } from "../vendor/data.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Popup } from "../components/Popup.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
 
 const buttonToOpenEditProfile = document.querySelector('.profile__edit-button');
 const buttonToCloseEditProfile = document.querySelector('#edit-profile-close-button');
@@ -116,7 +120,7 @@ initialCards.forEach((el) => {
   }).createCard(openPopup));
 });
 
-const popupList = Array.from(document.querySelectorAll('.popup'));
+// const popupList = Array.from(document.querySelectorAll('.popup'));
 const validationConfig = {
   errorElementSelector: '.popup__error-text',
   errorElementVisibleClass: 'popup__error-text_type_visible',

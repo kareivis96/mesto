@@ -1,3 +1,5 @@
+import { PopupWithImage } from "./PopupWithImage.js";
+
 export class Card {
   constructor(data) {
     this._cardTemplate = document.querySelector(`${data.cardTemplateSelector}`).content;
