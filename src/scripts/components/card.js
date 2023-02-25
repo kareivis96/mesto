@@ -1,8 +1,6 @@
-import { PopupWithImage } from "./PopupWithImage.js";
-
 export class Card {
   constructor(data, handleCardClick) {
-    this._cardTemplate = document.querySelector(`${data.cardTemplateSelector}`).content;
+    this._cardTemplate = document.querySelector(data.cardTemplateSelector).content;
     this._cardUrl = data.cardUrl;
     this._cardName = data.cardName;
     this._handleCardClick = handleCardClick;
@@ -24,7 +22,7 @@ export class Card {
 
     this._buttonLike.addEventListener('click', (evt) => this._handlerLikeEvent(evt));
     this._buttonDelete.addEventListener('click', (evt) => this._handlerCardDeleteEvent());
-    this._cardImage.addEventListener('click', this._handleCardClick);
+    this._cardImage.addEventListener('click', (evt) => this._handleCardClick(this._cardUrl, this._cardName));
   }
 
   createCard() {

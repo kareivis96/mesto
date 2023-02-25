@@ -6,8 +6,8 @@ export class UserInfo {
 
   getUserInfo() {
     const userInfo = {}
-    userInfo.name = this._nameElement.textContent;
-    userInfo.aboutMe = this._aboutMeElement.textContent;
+    userInfo.formName = this._nameElement.textContent;
+    userInfo.formJob = this._aboutMeElement.textContent;
     return userInfo;
   }
 
