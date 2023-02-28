@@ -1,0 +1,57 @@
+export class Api {
+  constructor({ url, token }) {
+    this._url = url;
+    this._token = token;
+  }
+
+  async _fetch(path, method, body) {
+    const answer = fetch( this._url + path, {
+      method: method,
+      headers: {
+        authorization: this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка запроса, код: ${res.status}`);
+      })
+    return answer;
+  }
+
+  getUserData() {
+    return this._fetch("/users/me", "GET");
+  }
+
+  getStartedCardsPack() {
+    return this._fetch("/cards", "GET");
+  }
+
+  editProfile({ name, about }) {
+    return this._fetch("/users/me", "PATCH", { name, about });
+  }
+
+  addNewCard({ name, link }) {
+    return this._fetch("/cards", "POST", { name, link });
+  }
+
+  editAvatar(avatar) {
+    return this._fetch("/users/me/avatar", "PATCH", avatar);
+  }
+
+  removeCard(userId) {
+    return this._fetch(`/cards/${userId}`, "DELETE");
+  }
+
+  setLike(userId) {
+    return this._fetch(`/cards/${userId}/likes`, "PUT");
+  }
+
+  removeLike(userId) {
+    return this._fetch(`/cards/${userId}/likes`, "DELETE");
+  }
+}
