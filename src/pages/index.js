@@ -35,49 +35,50 @@ const popupEditProfile = new PopupWithForm('#edit-profile-popup', (inputValues) 
     });
 });
 
-const handleLikeClick = (isLiked, userId) => {
-  if (isLiked) {
-    api.removeLike(userId).then( res => { console.log(isLiked) })
-  } else {
-    api.setLike(userId).then( res => { console.log(isLiked) })
-  }
-}
-
 const handleImgClick = (link, name) => {
   imagePopup.open(link, name);
 }
 
-const renderCard = (card) => {
+const renderCard = (card, userId) => {
   const currentCard = new Card(
-  '#card-template',
-  card,
-  handleImgClick,
-  handleLikeClick,
+    '#card-template',
+    userId,
+    card,
+    handleImgClick,
+    (dataId, isLiked) => {
+      if (isLiked) {
+        api.removeLike(dataId).then( res => {
+          currentCard.setLikeInactive(res);
+        })
+      } else {
+        api.setLike(dataId).then( res => {
+          currentCard.setLikeActive(res);
+        })
+      }
+    },
   );
   cardsSection.addItem(currentCard.createCard());
 };
 const cardsSection = new Section(renderCard, '.gallery__list');
 
 const popupToCreateCard = new PopupWithForm('#add-card-popup', ({ addFormUrl, addFormName }) => {
-  api.addNewCard({name: addFormName, link: addFormUrl})
-    .then(res => {
-      console.log(res);
-      cardsSection.renderItems([{ ...res }]);
+  Promise.all([ api.getUserData(), api.addNewCard({name: addFormName, link: addFormUrl}) ])
+    .then( ([ userData, card ]) => {
+      cardsSection.renderItems([{ ...card }], userData._id);
     })
+    .catch(err => console.log('Ошибка: ' + err))
 });
 
-// загрузка данных пользователя с сервера
-api.getUserData()
-  .then(res => {
+// загрузка данных пользователя с сервера и стартовых карточек
+Promise.all([ api.getUserData(), api.getStartedCardsPack()])
+  .then(([ userData, initialCards ]) => {
     userInfo.setUserInfo({
-      name: res.name,
-      aboutMe: res.about,
-    });
-  });
-
-// рендер стартовых карточек
-api.getStartedCardsPack()
-  .then(res => cardsSection.renderItems(res));
+      name: userData.name,
+      aboutMe: userData.about,
+    })
+    cardsSection.renderItems(initialCards, userData._id);
+  })
+  .catch(err => console.log('Ошибка: ' + err));
 
 
 buttonToOpenCardPopup.addEventListener('click', evt => popupToCreateCard.open());
