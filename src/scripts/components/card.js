@@ -1,5 +1,5 @@
 export class Card {
-  constructor(cardTemplateSelector, userId, data, handleCardClick, handleLikeClick) {
+  constructor(cardTemplateSelector, userId, data, handleCardClick, handleLikeClick, handleDeleteClick) {
     this._data = data;
     this.userId = userId;
     this._link = this._data.link;
@@ -8,6 +8,7 @@ export class Card {
     this._ownerId = this._data.owner._id;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
+    this._handleDeleteClick = handleDeleteClick;
     this._cardTemplate = document.querySelector(cardTemplateSelector).content;
     this._card = this._cardTemplate.querySelector('#card-list-element').cloneNode(true);
     this._cardImage = this._card.querySelector('.card__img');
@@ -19,8 +20,11 @@ export class Card {
   }
 
   _handlerCardDeleteEvent() {
-    this._card.remove();
-    this._card = null;
+    this._handleDeleteClick();
+  }
+
+  _setDeleteButtonVisibility() {
+    if (this.userId !== this._ownerId) this._buttonDelete.remove();
   }
 
   _setLikeState(data, isLiked) {
@@ -51,8 +55,7 @@ export class Card {
 
   _setCardEventListener() {
     this._buttonLike.addEventListener('click', this._handlerLikeClick.bind(this));
-    this._buttonDelete.addEventListener('click', (evt) => this._handlerCardDeleteEvent());
-    this._cardImage.addEventListener('click', (evt) => this._handleCardClick(this._link, this._name));
+    this._buttonDelete.addEventListener('click', this._handlerCardDeleteEvent.bind(this));
     this._cardImage.addEventListener('click', (evt) => this._handleCardClick(this._link, this._name));
   }
 
@@ -60,9 +63,13 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardText.textContent = this._name;
+    this._setDeleteButtonVisibility();
     this._setCardEventListener();
     this._setLikeState(this._data, this.isLiked);
 
     return this._card;
+  }
+  removeCard() {
+    this._card.remove();
   }
 }

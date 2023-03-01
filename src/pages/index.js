@@ -56,6 +56,16 @@ const renderCard = (card, userId) => {
         })
       }
     },
+    () => {
+      const popupToDeleteCard = new PopupWithForm('#confirm-delete-popup', () => {
+        api.removeCard(card._id)
+          .then(res => {
+            currentCard.removeCard();
+          })
+          .catch(err => console.log('Ошибка: ' + err));
+      });
+      popupToDeleteCard.open();
+    },
   );
   cardsSection.addItem(currentCard.createCard());
 };
@@ -76,7 +86,7 @@ Promise.all([ api.getUserData(), api.getStartedCardsPack()])
       name: userData.name,
       aboutMe: userData.about,
     })
-    cardsSection.renderItems(initialCards, userData._id);
+    cardsSection.renderItems(initialCards.reverse(), userData._id);
   })
   .catch(err => console.log('Ошибка: ' + err));
 

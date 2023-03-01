@@ -43,15 +43,15 @@ export class Api {
     return this._fetch("/users/me/avatar", "PATCH", avatar);
   }
 
-  removeCard(userId) {
-    return this._fetch(`/cards/${userId}`, "DELETE");
+  removeCard(cardId) {
+    return this._fetch(`/cards/${cardId}`, "DELETE");
   }
 
-  setLike(userId) {
-    return this._fetch(`/cards/${userId}/likes`, "PUT");
+  setLike(cardId) {
+    return this._fetch(`/cards/${cardId}/likes`, "PUT");
   }
 
-  removeLike(userId) {
-    return this._fetch(`/cards/${userId}/likes`, "DELETE");
+  removeLike(cardId) {
+    return this._fetch(`/cards/${cardId}/likes`, "DELETE");
   }
 }
