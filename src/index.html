@@ -17,7 +17,9 @@
   <main class="main ">
 
     <section class="profile position-center">
-      <img src="<%=require('./images/avatar.jpg')%>" alt="аватарка" class="profile__avatar">
+      <div class="profile__avatar-container">
+        <img src="<%=require('./images/avatar.jpg')%>" alt="аватарка" class="profile__avatar">
+      </div>
       <div class="profile__info">
         <div class="profile__container">
           <h1 class="profile__heading">Жак-Ив Кусто</h1>
@@ -84,6 +86,21 @@
       <h2 class="popup__heading">Вы уверены?</h2>
       <form id="confirm-delete-form" name="addForm" class="popup__form">
         <button type="submit" class="popup__save-button">Да</button>
+      </form>
+      <button id="add-card-close-button" type="button" class="close-button"></button>
+    </div>
+  </div>
+
+  <div id="change-avatar-popup" class="popup">
+    <div class="popup__container">
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <form id="change-avatar-form" name="addForm" class="popup__form">
+        <div class="popup__input-wrapper">
+          <input id="change-avatar-input-url" name="avatar" type="url" class="popup__input"
+            placeholder="Ссылка на картинку" required>
+          <p class="popup__error-text"></p>
+        </div>
+        <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
       <button id="add-card-close-button" type="button" class="close-button"></button>
     </div>
