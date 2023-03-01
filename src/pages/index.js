@@ -34,6 +34,7 @@ const avatarPopup = new PopupWithForm('#change-avatar-popup', (inputValues) => {
       avatar.src = res.avatar;
     })
     .catch(err => console.log('Ошибка: ' + err))
+    .finally(() => avatarPopup.removePreloader())
 })
 avatarContainer.onclick = () => avatarPopup.open();
 
@@ -91,6 +92,7 @@ const popupToCreateCard = new PopupWithForm('#add-card-popup', ({ addFormUrl, ad
       cardsSection.renderItems([{ ...card }]);
     })
     .catch(err => console.log('Ошибка: ' + err))
+    .finally(() => popupToCreateCard.removePreloader())
 });
 
 // загрузка данных пользователя с сервера и стартовых карточек
