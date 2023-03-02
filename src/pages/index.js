@@ -1,8 +1,9 @@
 import { Card } from "../scripts/components/card.js";
-import { initialCards, validationConfig } from "../scripts/vendor/data.js";
+import { validationConfig } from "../scripts/vendor/data.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
+import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Section } from "../scripts/components/Section.js";
 import { Api } from "../scripts/components/Api.js";
@@ -12,11 +13,15 @@ import './index.css';
 const buttonToOpenCardPopup = document.querySelector('.profile__add-button');
 const buttonToOpenEditProfile = document.querySelector('.profile__edit-button');
 const avatarContainer = document.querySelector('.profile__avatar-container');
-const avatar = document.querySelector('.profile__avatar');
+const formProfile = document.querySelector('#edit-profile-form');
+const formAvatar = document.querySelector('#change-avatar-form');
+const formCardAdd = document.querySelector('#add-card-form');
+const profilePopupValidation = new FormValidator(validationConfig, formProfile);
+const avatarPopupValidation = new FormValidator(validationConfig, formAvatar);
+const cardPopupValidation = new FormValidator(validationConfig, formCardAdd);
+
 const imagePopup = new PopupWithImage('#image-popup');
-const profilePopupValidation = new FormValidator(validationConfig, '#edit-profile-popup');
-const cardPopupValidation = new FormValidator(validationConfig, '#add-card-popup');
-const avatarPopupValidation = new FormValidator(validationConfig, '#change-avatar-popup');
+imagePopup.setEventListeners();
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-60',
@@ -26,29 +31,31 @@ const api = new Api({
 const userInfo = new UserInfo({
   nameSelector: '.profile__heading',
   aboutMeSelector: '.profile__paragraph',
+  avatarSelector: '.profile__avatar',
 });
 
 const avatarPopup = new PopupWithForm('#change-avatar-popup', (inputValues) => {
   api.editAvatar(inputValues)
     .then(res => {
-      avatar.src = res.avatar;
+      userInfo.setAvatar(res.avatar);
+      avatarPopup.close();
     })
     .catch(err => console.log('Ошибка: ' + err))
     .finally(() => avatarPopup.removePreloader())
-})
+});
+avatarPopup.setEventListeners();
 avatarContainer.onclick = () => avatarPopup.open();
 
 const popupEditProfile = new PopupWithForm('#edit-profile-popup', (inputValues) => {
   api.editProfile({ name: inputValues.formName, about: inputValues.formJob })
     .then(res => {
-      userInfo.setUserInfo({
-        name: res.name,
-        aboutMe: res.about,
-      })
+      userInfo.setUserInfo({ name: res.name, aboutMe: res.about })
+      popupEditProfile.close();
     })
     .catch(err => console.log('Ошибка: ' + err))
     .finally(() => popupEditProfile.removePreloader())
 });
+popupEditProfile.setEventListeners();
 
 const handleImgClick = (link, name) => {
   imagePopup.open(link, name);
@@ -72,13 +79,16 @@ const renderCard = (card) => {
       }
     },
     () => {
-      const popupToDeleteCard = new PopupWithForm('#confirm-delete-popup', () => {
+      const popupToDeleteCard = new PopupWithConfirmation('#confirm-delete-popup', () => {
         api.removeCard(card._id)
           .then(res => {
             currentCard.removeCard();
+            popupToDeleteCard.close();
           })
-          .catch(err => console.log('Ошибка: ' + err));
+          .catch(err => console.log('Ошибка: ' + err))
+          .finally(() => popupToDeleteCard.removePreloader())
       });
+      popupToDeleteCard.setEventListeners();
       popupToDeleteCard.open();
     },
   );
@@ -90,10 +100,12 @@ const popupToCreateCard = new PopupWithForm('#add-card-popup', ({ addFormUrl, ad
   api.addNewCard({ name: addFormName, link: addFormUrl })
     .then(card => {
       cardsSection.renderItems([{ ...card }]);
+      popupToCreateCard.close();
     })
     .catch(err => console.log('Ошибка: ' + err))
     .finally(() => popupToCreateCard.removePreloader())
 });
+popupToCreateCard.setEventListeners();
 
 // загрузка данных пользователя с сервера и стартовых карточек
 Promise.all([api.getUserData(), api.getStartedCardsPack()])
@@ -103,7 +115,7 @@ Promise.all([api.getUserData(), api.getStartedCardsPack()])
       aboutMe: userData.about,
       userId: userData._id,
     })
-    avatar.src = userData.avatar;
+    userInfo.setAvatar(userData.avatar);
     cardsSection.renderItems(initialCards.reverse());
   })
   .catch(err => console.log('Ошибка: ' + err));
