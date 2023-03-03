@@ -18,16 +18,16 @@ export class PopupWithConfirmation extends Popup {
     this._submitButton.textContent = this._submitButtonDefaultText;
   }
 
-  setDefaultInputsValues(data) {
-    for (let input of this._inputs) {
-      input.value = data[input.name];
-    }
+  open(cardId, card) {
+    super.open();
+    this._cardId = cardId;
+    this._card = card;
   }
 
   onFormSubmit(evt) {
     evt.preventDefault();
     this._addPreloader();
-    this._handleSubmitForm();
+    this._handleSubmitForm(this._cardId, this._card);
   }
 
   setEventListeners() {

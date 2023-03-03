@@ -20,7 +20,7 @@ export class Card {
   }
 
   _handleCardDeleteEvent() {
-    this._handleDeleteClick();
+    this._handleDeleteClick(this._data._id);
   }
 
   _setDeleteButtonVisibility() {

@@ -20,19 +20,23 @@ const profilePopupValidation = new FormValidator(validationConfig, formProfile);
 const avatarPopupValidation = new FormValidator(validationConfig, formAvatar);
 const cardPopupValidation = new FormValidator(validationConfig, formCardAdd);
 
-const imagePopup = new PopupWithImage('#image-popup');
-imagePopup.setEventListeners();
 
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-60',
   token: '0de5ee20-cdc3-41ba-9a09-6a93d92b63aa',
 });
 
+
 const userInfo = new UserInfo({
   nameSelector: '.profile__heading',
   aboutMeSelector: '.profile__paragraph',
   avatarSelector: '.profile__avatar',
 });
+
+
+const imagePopup = new PopupWithImage('#image-popup');
+imagePopup.setEventListeners();
+
 
 const avatarPopup = new PopupWithForm('#change-avatar-popup', (inputValues) => {
   api.editAvatar(inputValues)
@@ -44,7 +48,32 @@ const avatarPopup = new PopupWithForm('#change-avatar-popup', (inputValues) => {
     .finally(() => avatarPopup.removePreloader())
 });
 avatarPopup.setEventListeners();
-avatarContainer.onclick = () => avatarPopup.open();
+avatarContainer.addEventListener('click', evt => avatarPopup.open());
+
+
+const popupToDeleteCard = new PopupWithConfirmation('#confirm-delete-popup', (cardId, currentCard) => {
+  api.removeCard(cardId)
+    .then(res => {
+      currentCard.removeCard();
+      popupToDeleteCard.close();
+    })
+    .catch(err => console.log('Ошибка: ' + err))
+    .finally(() => popupToDeleteCard.removePreloader())
+});
+popupToDeleteCard.setEventListeners();
+
+
+const popupToCreateCard = new PopupWithForm('#add-card-popup', ({ addFormUrl, addFormName }) => {
+  api.addNewCard({ name: addFormName, link: addFormUrl })
+    .then(card => {
+      cardsSection.renderItems([{ ...card }]);
+      popupToCreateCard.close();
+    })
+    .catch(err => console.log('Ошибка: ' + err))
+    .finally(() => popupToCreateCard.removePreloader())
+});
+popupToCreateCard.setEventListeners();
+
 
 const popupEditProfile = new PopupWithForm('#edit-profile-popup', (inputValues) => {
   api.editProfile({ name: inputValues.formName, about: inputValues.formJob })
@@ -57,9 +86,11 @@ const popupEditProfile = new PopupWithForm('#edit-profile-popup', (inputValues) 
 });
 popupEditProfile.setEventListeners();
 
+
 const handleImgClick = (link, name) => {
   imagePopup.open(link, name);
 }
+
 
 const renderCard = (card) => {
   const currentCard = new Card(
@@ -78,36 +109,15 @@ const renderCard = (card) => {
           .catch(err => console.log('Ошибка: ' + err))
       }
     },
-    () => {
-      const popupToDeleteCard = new PopupWithConfirmation('#confirm-delete-popup', () => {
-        api.removeCard(card._id)
-          .then(res => {
-            currentCard.removeCard();
-            popupToDeleteCard.close();
-          })
-          .catch(err => console.log('Ошибка: ' + err))
-          .finally(() => popupToDeleteCard.removePreloader())
-      });
-      popupToDeleteCard.setEventListeners();
-      popupToDeleteCard.open();
+    (cardId) => {
+      popupToDeleteCard.open(cardId, currentCard);
     },
   );
   cardsSection.addItem(currentCard.createCard());
 };
 const cardsSection = new Section(renderCard, '.gallery__list');
 
-const popupToCreateCard = new PopupWithForm('#add-card-popup', ({ addFormUrl, addFormName }) => {
-  api.addNewCard({ name: addFormName, link: addFormUrl })
-    .then(card => {
-      cardsSection.renderItems([{ ...card }]);
-      popupToCreateCard.close();
-    })
-    .catch(err => console.log('Ошибка: ' + err))
-    .finally(() => popupToCreateCard.removePreloader())
-});
-popupToCreateCard.setEventListeners();
 
-// загрузка данных пользователя с сервера и стартовых карточек
 Promise.all([api.getUserData(), api.getStartedCardsPack()])
   .then(([userData, initialCards]) => {
     userInfo.setUserInfo({
